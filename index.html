@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tech News & Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f7f9fb; color: #232323; margin: 0; }
+        a { color: #0073e6; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        header { background: #232323; color: #fff; padding: 0; }
+        .topbar { background: #0073e6; padding: 8px 0; text-align: right; font-size: 0.95rem; }
+        .topbar a { color: #fff; margin-left: 18px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .logo { font-size: 2rem; font-weight: bold; letter-spacing: 2px; padding: 18px 0 10px 0; display: inline-block; }
+        nav { background: #222; }
+        nav ul { list-style: none; display: flex; gap: 32px; margin: 0; padding: 0 0 0 8px; }
+        nav ul li { display: inline; }
+        nav ul li a { color: #fff; font-weight: 500; padding: 14px 0 12px 0; display: inline-block; border-bottom: 3px solid transparent; }
+        nav ul li a.active, nav ul li a:hover { border-bottom: 3px solid #0073e6; }
+        .main-flex { display: flex; gap: 32px; margin-top: 30px; }
+        .main-content { flex: 3; }
+        .sidebar { flex: 1; background: #fff; padding: 22px 18px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.07); margin-top: 10px; }
+        .featured { background: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.09); margin-bottom: 30px; display: flex; gap: 24px; }
+        .featured img { width: 320px; height: 200px; object-fit: cover; border-radius: 8px 0 0 8px; }
+        .featured-content { padding: 22px 0; }
+        .featured-content h2 { margin: 0 0 10px 0; }
+        .featured-content p { color: #444; }
+        .section-title { border-bottom: 2px solid #0073e6; padding-bottom: 6px; margin-bottom: 18px; font-size: 1.3rem; }
+        .cards { display: flex; flex-wrap: wrap; gap: 24px; }
+        .card { background: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.07); flex: 1 1 320px; padding: 18px; min-width: 290px; max-width: 340px; transition: transform 0.2s; display: flex; flex-direction: column; }
+        .card:hover { transform: translateY(-6px) scale(1.02); }
+        .card img { width: 100%; border-radius: 6px; margin-bottom: 10px; height: 150px; object-fit: cover; }
+        .card h3 { margin-bottom: 7px; font-size: 1.08rem; }
+        .card .meta { font-size: 0.92rem; color: #888; margin-bottom: 7px; }
+        .card p { flex: 1; }
+        .card .card-links { margin-top: 8px; }
+        .card .card-links a { font-size: 0.97rem; margin-right: 12px; }
+        .sidebar-section { margin-bottom: 26px; }
+        .sidebar-section h4 { margin-bottom: 12px; font-size: 1.07rem; color: #0073e6; }
+        .sidebar-section ul { list-style: none; padding-left: 0; }
+        .sidebar-section li { margin-bottom: 8px; }
+        .newsletter input[type="email"] { width: 70%; padding: 8px; border-radius: 5px 0 0 5px; border: 1px solid #ccc; }
+        .newsletter button { border-radius: 0 5px 5px 0; padding: 8px 16px; }
+        .blog-list { display: flex; flex-direction: column; gap: 26px; }
+        .blog-post { background: #fff; padding: 18px 22px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.07); }
+        .blog-post h3 { margin-bottom: 6px; }
+        .blog-post .meta { font-size: 0.9rem; color: #888; margin-bottom: 6px; }
+        .blog-tags { margin-bottom: 8px; }
+        .blog-tags span { background: #0073e6; color: #fff; border-radius: 3px; padding: 2px 8px; margin-right: 6px; font-size: 0.85rem; }
+        .like-btn { background: #eee; border: none; border-radius: 4px; padding: 3px 10px; cursor: pointer; margin-left: 8px; }
+        .about-section, .contact-section { background: #fff; padding: 28px 22px; border-radius: 8px; margin-top: 30px; box-shadow: 0 2px 6px rgba(0,0,0,0.07); }
+        .team-cards { display: flex; gap: 18px; margin-top: 16px; flex-wrap: wrap; }
+        .team-card { background: #f1f8ff; border-radius: 8px; padding: 12px 10px; flex: 1 1 160px; text-align: center; }
+        .team-card img { width: 55px; border-radius: 50%; margin-bottom: 7px; }
+        .team-card .team-social a { margin: 0 4px; font-size: 1.1rem; color: #0073e6; }
+        .timeline { margin: 18px 0; border-left: 3px solid #0073e6; padding-left: 12px; }
+        .timeline-event { margin-bottom: 10px; }
+        .timeline-event h4 { margin-bottom: 2px; }
+        .values { display: flex; gap: 14px; margin-top: 10px; }
+        .value-card { background: #f1f8ff; border-radius: 8px; padding: 12px 10px; flex: 1; }
+        form { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+        input, textarea { padding: 8px 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; }
+        button { background: #0073e6; color: #fff; border: none; padding: 9px 0; border-radius: 5px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+        button:hover { background: #005bb5; }
+        .faq { margin-top: 16px; }
+        .faq-item { margin-bottom: 7px; }
+        .faq-q { background: #eee; padding: 8px 12px; border-radius: 5px; cursor: pointer; }
+        .faq-a { display: none; padding: 8px 12px; }
+        .faq-a.open { display: block; background: #f7f9fb; }
+        .map { margin: 14px 0 0 0; border-radius: 8px; overflow: hidden; }
+        .contact-social { margin-top: 10px; }
+        .contact-social a { margin-right: 10px; font-size: 1.1rem; color: #0073e6; }
+        footer { background: #232323; color: #fff; text-align: center; padding: 14px 0; margin-top: 40px; font-size: 0.98rem; }
+        @media (max-width: 900px) { .cards, .main-flex, .team-cards, .values { flex-direction: column; } .featured { flex-direction: column; } .featured img { width: 100%; border-radius: 8px 8px 0 0; } }
+        .hidden { display: none !important; }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="topbar">
+            <span>Follow us:</span>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+        </div>
+        <div class="container">
+            <span class="logo">Tech News & Blog</span>
+        </div>
+        <nav>
+            <div class="container">
+                <ul>
+                    <li><a href="#" data-page="home" class="active">Home</a></li>
+                    <li><a href="#" data-page="news">News</a></li>
+                    <li><a href="#" data-page="blog">Tech Blog</a></li>
+                    <li><a href="#" data-page="about">About Us</a></li>
+                    <li><a href="#" data-page="contact">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Home Page -->
+    <section id="home">
+        <div class="container">
+            <div class="main-flex">
+                <div class="main-content">
+                    <div class="featured">
+                        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80" alt="Featured News">
+                        <div class="featured-content">
+                            <h2>AI Revolutionizes Daily Life</h2>
+                            <p>Discover how AI is changing the way we live, work, and connect in 2025. <a href="#" data-page="news">Read More &rarr;</a></p>
+                        </div>
+                    </div>
+                    <div class="section-title">Latest Highlights</div>
+                    <div class="cards">
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80" alt="Tech Blog">
+                            <h3>Expert Blogs</h3>
+                            <p>Read blogs and opinions from industry experts and tech enthusiasts.</p>
+                            <div class="card-links">
+                                <a href="#" data-page="blog">Read Blogs &rarr;</a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?auto=format&fit=crop&w=800&q=80" alt="About Us">
+                            <h3>About Us</h3>
+                            <p>Learn more about our mission, team, and what drives our passion for technology.</p>
+                            <div class="card-links">
+                                <a href="#" data-page="about">Learn More &rarr;</a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1510511459019-5dda7724fd87?auto=format&fit=crop&w=800&q=80" alt="Contact">
+                            <h3>Contact Us</h3>
+                            <p>Have questions, suggestions, or want to contribute? Reach out to us!</p>
+                            <div class="card-links">
+                                <a href="#" data-page="contact">Contact &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <aside class="sidebar">
+                    <div class="sidebar-section">
+                        <h4>Trending Topics</h4>
+                        <ul>
+                            <li><a href="#" onclick="filterNews('AI'); return false;">#AI</a></li>
+                            <li><a href="#" onclick="filterNews('Quantum'); return false;">#QuantumComputing</a></li>
+                            <li><a href="#" onclick="filterNews('Security'); return false;">#Cybersecurity</a></li>
+                            <li><a href="#" onclick="filterNews('Gadgets'); return false;">#Gadgets</a></li>
+                            <li><a href="#" onclick="filterNews('Startups'); return false;">#Startups</a></li>
+                        </ul>
+                    </div>
+                    <div class="sidebar-section newsletter">
+                        <h4>Newsletter</h4>
+                        <form id="newsletter-form">
+                            <input type="email" id="newsletter-email" placeholder="Your Email" required>
+                            <button type="submit">Subscribe</button>
+                        </form>
+                        <div id="newsletter-msg" style="font-size:0.95rem;margin-top:8px;"></div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Page -->
+    <section id="news" class="container hidden">
+        <div class="section-title">Tech News</div>
+        <div class="filter-bar" style="margin-bottom:18px;">
+            <span>Filter:</span>
+            <button class="filter-btn active" data-cat="All">All</button>
+            <button class="filter-btn" data-cat="AI">AI</button>
+            <button class="filter-btn" data-cat="Quantum">Quantum</button>
+            <button class="filter-btn" data-cat="Security">Security</button>
+            <button class="filter-btn" data-cat="Gadgets">Gadgets</button>
+            <button class="filter-btn" data-cat="Startups">Startups</button>
+        </div>
+        <div class="cards" id="news-cards"></div>
+        <div style="text-align:center;margin:30px 0;">
+            <button id="load-more-news">Load More</button>
+        </div>
+    </section>
+
+    <!-- Blog Page -->
+    <section id="blog" class="container hidden">
+        <div class="section-title">Tech Blog</div>
+        <div class="filter-bar" style="margin-bottom:18px;">
+            <input type="text" id="blog-search" placeholder="Search blog posts...">
+            <span>Tags:</span>
+            <button class="tag-btn active" data-tag="All">All</button>
+            <button class="tag-btn" data-tag="Edge">Edge</button>
+            <button class="tag-btn" data-tag="5G">5G</button>
+            <button class="tag-btn" data-tag="Security">Security</button>
+            <button class="tag-btn" data-tag="AI">AI</button>
+            <button class="tag-btn" data-tag="Cloud">Cloud</button>
+        </div>
+        <div class="blog-list" id="blog-list"></div>
+        <div class="sidebar-section featured-author" style="margin-top:30px;">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Featured Author" style="width:60px;border-radius:50%;vertical-align:middle;margin-right:14px;">
+            <strong>Featured Author: John Smith</strong> <br>
+            <span>Senior Writer, Tech News & Blog</span>
+            <p style="margin-top:8px;">John specializes in emerging tech and has contributed to leading publications since 2015.</p>
+        </div>
+    </section>
+
+    <!-- About Us Page -->
+    <section id="about" class="container hidden">
+        <section class="about-section">
+            <h2>About Us</h2>
+            <p>
+                <strong>Tech News & Blog</strong> is your trusted source for the latest updates in technology, insightful blogs, and expert analysis. Our mission is to empower readers with timely news, deep dives, and practical tips in the ever-evolving tech landscape.
+            </p>
+            <div class="values">
+                <div class="value-card">
+                    <h4>Integrity</h4>
+                    <p>We are committed to honest, unbiased reporting and analysis.</p>
+                </div>
+                <div class="value-card">
+                    <h4>Innovation</h4>
+                    <p>We embrace new ideas and technologies to deliver value.</p>
+                </div>
+                <div class="value-card">
+                    <h4>Community</h4>
+                    <p>We foster a community of learners, creators, and tech enthusiasts.</p>
+                </div>
+            </div>
+            <h3 style="margin-top:24px;">Our Team</h3>
+            <div class="team-cards">
+                <div class="team-card">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Jane Doe">
+                    <h4>Jane Doe</h4>
+                    <p>Chief Editor</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="John Smith">
+                    <h4>John Smith</h4>
+                    <p>Senior Writer</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <img src="https://randomuser.me/api/portraits/men/56.jpg" alt="Alex Lee">
+                    <h4>Alex Lee</h4>
+                    <p>Security Analyst</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Priya Kumar">
+                    <h4>Priya Kumar</h4>
+                    <p>Community Manager</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <h3 style="margin-top:20px;">Our Journey</h3>
+            <div class="timeline">
+                <div class="timeline-event">
+                    <h4>2025</h4>
+                    <p>Tech News & Blog founded by a group of passionate tech writers.</p>
+                </div>
+                <div class="timeline-event">
+                    <h4>2026</h4>
+                    <p>Reached 10,000 monthly readers and expanded our blog section.</p>
+                </div>
+                <div class="timeline-event">
+                    <h4>2027</h4>
+                    <p>Launched our first podcast and community events.</p>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <!-- Contact Page -->
+    <section id="contact" class="container hidden">
+        <section class="contact-section">
+            <h2>Contact Us</h2>
+            <p>Have questions, suggestions, or want to contribute? Reach out to us!</p>
+            <form id="contact-form">
+                <input type="text" id="contact-name" placeholder="Your Name" required>
+                <input type="email" id="contact-email" placeholder="Your Email" required>
+                <textarea id="contact-message" rows="5" placeholder="Your Message" required></textarea>
+                <div id="form-error" style="color: #e53935; font-size: 0.98rem;"></div>
+                <div id="form-success" style="color: #43a047; font-size: 0.98rem;"></div>
+                <button type="submit">Send Message</button>
+            </form>
+            <div class="map">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019547033508!2d-122.41941518468161!3d37.77492927975913!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c5b0b6b7d%3A0x2a0e1b2a1e1f1a1e!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1682323232323!5m2!1sen!2sus" width="100%" height="160" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div class="contact-social">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+            </div>
+            <div class="faq">
+                <h3>Frequently Asked Questions</h3>
+                <div class="faq-item">
+                    <div class="faq-q">How can I contribute an article?</div>
+                    <div class="faq-a">Email us your article idea via the contact form, and our editor will get in touch!</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Is the newsletter free?</div>
+                    <div class="faq-a">Yes, our newsletter is completely free for all subscribers.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">How do I advertise on your site?</div>
+                    <div class="faq-a">Contact us using the form above, and our business team will respond promptly.</div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <footer>
+        &copy; 2025 Tech News & Blog. All rights reserved.
+    </footer>
+
+    <script>
+        // SPA Navigation
+        const navLinks = document.querySelectorAll('nav ul li a');
+        const sections = {
+            home: [document.getElementById('home')],
+            news: [document.getElementById('news')],
+            blog: [document.getElementById('blog')],
+            about: [document.getElementById('about')],
+            contact: [document.getElementById('contact')]
+        };
+        function showPage(page) {
+            Object.values(sections).flat().forEach(sec => sec.classList.add('hidden'));
+            navLinks.forEach(link => link.classList.remove('active'));
+            if (sections[page]) sections[page].forEach(sec => sec.classList.remove('hidden'));
+            navLinks.forEach(link => { if (link.dataset.page === page) link.classList.add('active'); });
+        }
+        navLinks.forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                showPage(link.dataset.page);
+                window.scrollTo(0,0);
+            });
+        });
+        // Card links
+        document.querySelectorAll('.card .card-links a').forEach(link => {
+            link.addEventListener('click', e => {
+                const page = link.dataset.page;
+                if (page) {
+                    e.preventDefault();
+                    showPage(page);
+                    window.scrollTo(0,0);
+                }
+            });
+        });
+        showPage('home');
+
+        // Newsletter
+        document.getElementById('newsletter-form').addEventListener('submit', function(e){
+            e.preventDefault();
+            const email = document.getElementById('newsletter-email').value.trim();
+            const msg = document.getElementById('newsletter-msg');
+            if (!/^\S+@\S+\.\S+$/.test(email)) {
+                msg.textContent = "Please enter a valid email.";
+                msg.style.color = "#e53935";
+            } else {
+                msg.textContent = "Subscribed! Check your inbox.";
+                msg.style.color = "#43a047";
+                document.getElementById('newsletter-form').reset();
+            }
+        });
+
+        // News Data
+        const allNews = [
+            { title: "AI Breakthrough: Next-Gen Language Models", cat: "AI", img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80", desc: "Researchers unveil the latest advancements in generative AI, promising smarter assistants and new possibilities." },
+            { title: "Quantum Computing Hits New Milestone", cat: "Quantum", img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80", desc: "Major tech companies announce quantum processors that outperform classical supercomputers in select tasks." },
+            { title: "Cybersecurity: New Threats in 2025", cat: "Security", img: "https://images.unsplash.com/photo-1510511459019-5dda7724fd87?auto=format&fit=crop&w=800&q=80", desc: "Experts warn about emerging cyber threats and share tips for staying protected in a connected world." },
+            { title: "Top 5 Gadgets of 2025", cat: "Gadgets", img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80", desc: "A roundup of the most innovative gadgets released this year." },
+            { title: "Startup Raises $50M for AI Healthcare", cat: "Startups", img: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80", desc: "A health-tech startup secures major funding to expand AI-driven diagnostics." },
+            { title: "AI-Powered Smart Homes", cat: "AI", img: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80", desc: "Smart homes are getting smarter with AI integration." },
+            { title: "Quantum Internet: Are We There Yet?", cat: "Quantum", img: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80", desc: "The race to build a quantum internet is heating up." },
+            { title: "Security Breach at Major Retailer", cat: "Security", img: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=800&q=80", desc: "Millions affected by a new data breach." },
+            { title: "Wearable Tech: What’s Next?", cat: "Gadgets", img: "https://images.unsplash.com/photo-1512446733611-9099a758e082?auto=format&fit=crop&w=800&q=80", desc: "A look at the future of wearable technology." },
+            { title: "Startup Spotlight: Green Energy", cat: "Startups", img: "https://images.unsplash.com/photo-1465101178521-c1a9136a3a8b?auto=format&fit=crop&w=800&q=80", desc: "How startups are innovating in the green energy space." }
+        ];
+        let newsPage = 1;
+        const newsPerPage = 4;
+        let currentNewsCat = "All";
+        function renderNews() {
+            let filtered = allNews.filter(n => currentNewsCat === "All" || n.cat === currentNewsCat);
+            const shown = filtered.slice(0, newsPage * newsPerPage);
+            const newsCards = document.getElementById('news-cards');
+            newsCards.innerHTML = '';
+            shown.forEach(n => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <img src="${n.img}" alt="${n.title}">
+                    <h3>${n.title}</h3>
+                    <p>${n.desc}</p>
+                    <div class="card-links">
+                        <a href="#">Read More</a>
+                        <a href="#" onclick="alert('Share on Twitter!')"><i class="fab fa-twitter"></i></a>
+                        <a href="#" onclick="alert('Share on Facebook!')"><i class="fab fa-facebook"></i></a>
+                    </div>
+                `;
+                newsCards.appendChild(card);
+            });
+            document.getElementById('load-more-news').style.display = (shown.length < filtered.length) ? 'inline-block' : 'none';
+        }
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.onclick = function() {
+                document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+                this.classList.add('active');
+                currentNewsCat = this.dataset.cat;
+                newsPage = 1;
+                renderNews();
+            }
+        });
+        document.getElementById('load-more-news').onclick = function() {
+            newsPage++;
+            renderNews();
+        };
+        function filterNews(cat) {
+            document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+            document.querySelector(`.filter-btn[data-cat="${cat}"]`).classList.add('active');
+            currentNewsCat = cat;
+            newsPage = 1;
+            showPage('news');
+            renderNews();
+        }
+        renderNews();
+
+        // Blog Data
+        const allBlogs = [
+            { title: "The Rise of Edge Computing", author: "Jane Doe", date: "April 20, 2025", tags: ["Edge", "Cloud"], likes: 12, content: "Edge computing is transforming how data is processed and delivered, reducing latency and enabling real-time applications. Learn how businesses are leveraging edge solutions in 2025." },
+            { title: "How 5G is Changing the Tech Landscape", author: "John Smith", date: "April 15, 2025", tags: ["5G", "Edge"], likes: 8, content: "5G technology is more than just faster internet. Discover its impact on IoT, smart cities, and the future of connectivity." },
+            { title: "Building Secure Applications in 2025", author: "Alex Lee", date: "April 10, 2025", tags: ["Security"], likes: 10, content: "Security remains a top concern for developers. Explore best practices and new tools for building secure apps in today's digital world." },
+            { title: "AI and the Future of Work", author: "Priya Kumar", date: "April 5, 2025", tags: ["AI"], likes: 15, content: "AI is reshaping the job market. Find out which skills will be most valuable in the coming years." },
+            { title: "Cloud-Native Development Trends", author: "Jane Doe", date: "March 28, 2025", tags: ["Cloud"], likes: 6, content: "Cloud-native technologies are enabling rapid innovation. See what’s trending in 2025." },
+            { title: "Quantum Computing for Beginners", author: "John Smith", date: "March 20, 2025", tags: ["Quantum"], likes: 7, content: "A simple introduction to quantum computing and why it matters." }
+        ];
+        let currentBlogTag = "All";
+        function renderBlogs() {
+            let search = document.getElementById('blog-search').value.toLowerCase();
+            let filtered = allBlogs.filter(b =>
+                (currentBlogTag === "All" || b.tags.includes(currentBlogTag)) &&
+                (b.title.toLowerCase().includes(search) || b.content.toLowerCase().includes(search))
+            );
+            const blogList = document.getElementById('blog-list');
+            blogList.innerHTML = '';
+            filtered.forEach((b, i) => {
+                const post = document.createElement('div');
+                post.className = 'blog-post';
+                post.innerHTML = `
+                    <h3>${b.title}</h3>
+                    <div class="meta">By ${b.author} | ${b.date}</div>
+                    <div class="blog-tags">${b.tags.map(t=>`<span>${t}</span>`).join('')}</div>
+                    <p>${b.content}</p>
+                    <button class="like-btn" data-idx="${i}"><i class="fa fa-thumbs-up"></i> Like (<span id="like-count-${i}">${b.likes}</span>)</button>
+                `;
+                blogList.appendChild(post);
+            });
+            document.querySelectorAll('.like-btn').forEach(btn => {
+                btn.onclick = function() {
+                    const idx = this.getAttribute('data-idx');
+                    allBlogs[idx].likes++;
+                    document.getElementById('like-count-' + idx).innerText = allBlogs[idx].likes;
+                };
+            });
+        }
+        document.getElementById('blog-search').addEventListener('input', renderBlogs);
+        document.querySelectorAll('.tag-btn').forEach(btn => {
+            btn.onclick = function() {
+                document.querySelectorAll('.tag-btn').forEach(b=>b.classList.remove('active'));
+                this.classList.add('active');
+                currentBlogTag = this.dataset.tag;
+                renderBlogs();
+            }
+        });
+        renderBlogs();
+
+        // Contact form validation
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('contact-name').value.trim();
+            const email = document.getElementById('contact-email').value.trim();
+            const message = document.getElementById('contact-message').value.trim();
+            let error = '';
+
+            if (!name) error = 'Please enter your name.';
+            else if (!email || !/^\S+@\S+\.\S+$/.test(email)) error = 'Please enter a valid email.';
+            else if (!message) error = 'Please enter your message.';
+
+            const errorDiv = document.getElementById('form-error');
+            const successDiv = document.getElementById('form-success');
+            errorDiv.textContent = '';
+            successDiv.textContent = '';
+
+            if (error) {
+                errorDiv.textContent = error;
+            } else {
+                successDiv.textContent = "Thank you for contacting us! We'll get back to you soon.";
+                document.getElementById('contact-form').reset();
+            }
+        });
+
+        // FAQ accordion
+        document.querySelectorAll('.faq-q').forEach(q => {
+            q.addEventListener('click', function() {
+                const a = this.nextElementSibling;
+                a.classList.toggle('open');
+            });
+        });
+    </script>
+</body>
+</html>
